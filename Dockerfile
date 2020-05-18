@@ -1,14 +1,15 @@
-FROM fanningert/aria2-daemon
+FROM tonyrl/aria2-daemon
 
-MAINTAINER fanningert <thomas@fanninger.at>
+MAINTAINER tonyrl
 
-RUN apk update && \
-	apk add git && \
-	git clone https://github.com/ziahamza/webui-aria2 /aria2-webui && \
-    	rm /aria2-webui/.git* -rf && \
-    	cp /aria2-webui/configuration.js /conf/aria2-webui-configuration.js && \
-    	apk del git && \
-	apk add --update darkhttpd
+RUN \
+ apk add --no-cache --upgrade \
+		darkhttpd \
+		git && \
+ git clone https://github.com/ziahamza/webui-aria2 /aria2-webui && \
+ rm /aria2-webui/.git* -rf && \
+ cp /aria2-webui/src/js/services/configuration.js /conf/aria2-webui-configuration.js && \
+ apk del git
 
 ADD root/ /
 
